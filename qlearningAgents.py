@@ -68,13 +68,13 @@ class QLearningAgent(ReinforcementAgent):
           terminal state, you should return a value of 0.0.
         """
         "*** YOUR CODE HERE ***"
-        legalActions = self.getLegalActions(state)
-        if len(legalActions)==0:
+        bestQValue = float('-inf')
+        for action in self.getLegalActions(state):
+          if self.getQValue(state,action) > bestQValue:
+            bestQValue = self.getQValue(state,action)
+        if bestQValue == float('-inf'):
           return 0.0
-        helper = util.Counter()
-        for action in legalActions:
-          helper[action] = self.getQValue(state, action)
-        return helper[helper.argMax()] # return the maximum arg
+        return bestQValue
 
 
 
